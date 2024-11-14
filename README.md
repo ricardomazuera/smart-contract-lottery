@@ -1,13 +1,34 @@
+## Smart Contract Lottery
+
+This is a simple smart contract lottery system that allows users to enter a lottery by sending a certain amount of ether to the contract. The contract will then randomly select a winner from the list of participants and send the entire balance to the winner.
+
+## Installation
+
+1. Clone the repository
+2. Install the dependencies
+
+```shell
+$ cargo install foundry
+```
+
+## Usage
+
+1. Start the local Ethereum node
+
+```shell
+$ anvil
+```
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
 Foundry consists of:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
 ## Documentation
 
