@@ -25,9 +25,6 @@ jobs:
         with:
           version: nightly
 
-      - name: Install Foundry Tools
-        run: foundryup
-
       - name: Update Forge and Install Dependencies
         run: |
           forge update
