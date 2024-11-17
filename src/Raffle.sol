@@ -39,6 +39,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
     /* Events */
     event RaffleEntered(address indexed player);
     event WinnerPicked(address indexed winner);
+    event RequestedRaffleWinner(uint256 indexed requestId);
 
     constructor(
         uint256 entranceFee,
@@ -113,7 +114,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
             To this we need:
         */
         // 1. Request RNG
-        s_vrfCoordinator.requestRandomWords(
+        uint256 requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
                 keyHash: i_keyHash,
                 subId: i_subscriptionId,
@@ -123,7 +124,8 @@ contract Raffle is VRFConsumerBaseV2Plus {
                 extraArgs: VRFV2PlusClient._argsToBytes(VRFV2PlusClient.ExtraArgsV1({nativePayment: false}))
             })
         );
-        // 2. Get RNG
+
+        emit RequestedRaffleWinner(requestId); // This is a redundant event, but it's useful for testing
     }
 
     function fulfillRandomWords(
