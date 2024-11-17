@@ -74,18 +74,18 @@ contract RaffleTest is Test {
         raffle.enterRaffle{value: entranceFee}();
     }
 
-    // function testDontAllowPlayersToEnterWhileRaffleIsCalculating() public {
-    //     // Arrange
-    //     vm.prank(PLAYER);
-    //     raffle.enterRaffle{value: entranceFee}();
-    //     vm.warp(block.timestamp + interval + 1); // This will make the automation be activated and the raffle will be calculating
-    //     vm.roll(block.number + 1); // This simulates the block where the automation is activated
+    function testDontAllowPlayersToEnterWhileRaffleIsCalculating() public {
+        // Arrange
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+        vm.warp(block.timestamp + interval + 1); // This will make the automation be activated and the raffle will be calculating
+        vm.roll(block.number + 1); // This simulates the block where the automation is activated
 
-    //     raffle.performUpkeep("");
+        raffle.performUpkeep("");
 
-    //     // Act / Assert
-    //     vm.expectRevert(Raffle.Raffle__RaffleIsNotOpen.selector);
-    //     vm.prank(PLAYER);
-    //     raffle.enterRaffle{value: entranceFee}();
-    // }
+        // Act / Assert
+        vm.expectRevert(Raffle.Raffle__RaffleIsNotOpen.selector);
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+    }
 }

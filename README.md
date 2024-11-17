@@ -6,6 +6,8 @@ This is a simple smart contract lottery system that allows users to enter a lott
 
 - foundry
 - [chainlink-brownie-contracts 1.1.1](https://github.com/smartcontractkit/chainlink-brownie-contracts)
+- [solmate v6](https://github.com/transmissions11/solmate)
+- [foundry-devops](https://github.com/Cyfrin/foundry-devops)
 
 ## Installation
 
@@ -15,4 +17,6 @@ This is a simple smart contract lottery system that allows users to enter a lott
 ```shell
 $ cargo install foundry
 $ forge install smartcontractkit/chainlink-brownie-contracts@1.1.1 --no-commit
+$ forge install transmissions11/solmate@v6 --no-commit
+$ forge install Cyfrin/foundry-devops --no-commit
 ```
