@@ -27,6 +27,7 @@ contract HelperConfig is CodeConstants, Script {
         uint256 subscriptionId;
         uint32 callbackGasLimit;
         address link;
+        address account;
     }
 
     NetworkConfig public localNetworkConfig;
@@ -36,7 +37,9 @@ contract HelperConfig is CodeConstants, Script {
         networkConfig[ETH_SEPOLIA_CHAIN_ID] = getSepoliaEthConfig();
     }
 
-    function getConfigByChainId(uint256 chainId) public returns (NetworkConfig memory) {
+    function getConfigByChainId(
+        uint256 chainId
+    ) public returns (NetworkConfig memory) {
         if (networkConfig[chainId].vrfCoordinator != address(0)) {
             return networkConfig[chainId];
         } else if (chainId == LOCAL_CHAIN_ID) {
@@ -51,15 +54,17 @@ contract HelperConfig is CodeConstants, Script {
     }
 
     function getSepoliaEthConfig() public pure returns (NetworkConfig memory) {
-        return NetworkConfig({
-            entranceFee: 0.1 ether, // 1e16
-            interval: 30, // 30 seconds
-            vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B, // Found this here: https://docs.chain.link/vrf/v2-5/supported-networks#sepolia-testnet
-            keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae, // Same 👆🏽
-            subscriptionId: 0,
-            callbackGasLimit: 500000, // 500k gas
-            link: 0x779877A7B0D9E8603169DdbD7836e478b4624789 // Found this here: https://docs.chain.link/resources/link-token-contracts
-        });
+        return
+            NetworkConfig({
+                entranceFee: 0.1 ether, // 1e16
+                interval: 30, // 30 seconds
+                vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B, // Found this here: https://docs.chain.link/vrf/v2-5/supported-networks#sepolia-testnet
+                keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae, // Same 👆🏽
+                subscriptionId: 0,
+                callbackGasLimit: 500000, // 500k gas
+                link: 0x779877A7B0D9E8603169DdbD7836e478b4624789, // Found this here: https://docs.chain.link/resources/link-token-contracts
+                account: 0x589605619b607C9eBF8520ce75D3007F4Dafd3d9
+            });
     }
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
@@ -70,8 +75,11 @@ contract HelperConfig is CodeConstants, Script {
 
         // Deploy mocks and such
         vm.startBroadcast();
-        VRFCoordinatorV2_5Mock vrfCoordinatorMock =
-            new VRFCoordinatorV2_5Mock(MOCK_BASE_FEE, MOCK_GAS_PRICE_LINK, MOCK_WEI_PER_UNIT_LINK);
+        VRFCoordinatorV2_5Mock vrfCoordinatorMock = new VRFCoordinatorV2_5Mock(
+            MOCK_BASE_FEE,
+            MOCK_GAS_PRICE_LINK,
+            MOCK_WEI_PER_UNIT_LINK
+        );
         LinkToken linkToken = new LinkToken();
         vm.stopBroadcast();
 
@@ -82,9 +90,11 @@ contract HelperConfig is CodeConstants, Script {
             keyHash: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae, // doesn't matter
             callbackGasLimit: 500000, // 500k gas
             subscriptionId: 0,
-            link: address(linkToken)
+            link: address(linkToken),
+            account: 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38
         });
 
+        vm.deal(localNetworkConfig.account, 100 ether);
         return localNetworkConfig;
     }
 }
