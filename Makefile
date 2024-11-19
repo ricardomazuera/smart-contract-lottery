@@ -25,3 +25,7 @@ run-unittests:
 run-forkedtests:
 	@echo "Running tests forked"
 	forge test --fork-url $(SEPOLIA_RPC_URL)
+
+deploy:
+	@echo "Deploying contract"
+	@forge script script/DeployRaffle.s.sol:DeployRaffle --rpc-url $(SEPOLIA_RPC_URL) --account $(SEPOLIA_WALLET_PK_NAME) --sender $(SEPOLIA_SENDER_ADDRESS) --broadcast --verify --etherscan-api-key $(ETHERSCAN_API_KEY) -vvvv
